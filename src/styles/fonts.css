@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "ppNeu";
+  src: url("../../public/fonts/ppNeu/PPNeueMontreal-Regular.woff2");
+}
+@font-face {
+  font-family: "bandit";
+  src: url("../../public/fonts/bandit.woff2");
+}
+
+/* html{
+  font-size: 1.2vw;
+} */
+h2 {
+  font-family: bandit;
+}
+p,
+span,
+li,
+a,
+button,
+input {
+  font-family: ppNeu;
+}
