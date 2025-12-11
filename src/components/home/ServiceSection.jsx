@@ -9,7 +9,6 @@ import React, { useEffect, useRef } from 'react'
 
 const ServiceSection = () => {
     const parentRef = useRef(null);
-    const stickerRef = useRef(null);
 
     CustomEase.create("custom_bounce", "(0.34, 1.56, 0.64, 1)")
 
@@ -146,58 +145,18 @@ const ServiceSection = () => {
 
     })
 
-
-    useEffect(() => {
-        const parent = parentRef.current;
-        const sticker = stickerRef.current;
-
-        const MAX_MOVE = 20; 
-
-        const handleMove = (e) => {
-            const rect = parent.getBoundingClientRect();
-
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const moveX = ((x - centerX) / centerX) * MAX_MOVE;
-            const moveY = ((y - centerY) / centerY) * MAX_MOVE;
-
-            sticker.style.transform = `
-        translate(-50%, -50%) 
-        translate(${moveX}px, ${moveY}px)
-        rotate(10deg)
-      `;
-        };
-
-        parent.addEventListener("mousemove", handleMove);
-
-        return () => parent.removeEventListener("mousemove", handleMove);
-    }, []);
-
-
     return (
         <>
             <div ref={parentRef} className=" services_paren w-full h-screen flex gap-x-[15vw] items-center justify-center">
 
-                <div className="text-center space-y-2">
-                    <div className="text-[18vw] relative text-center leading-[13vw] uppercase">
-                        <div
-                            ref={stickerRef}
-                            className="serv_orge_stickr absolute uppercase px-3 py-1 text-6xl z-10 rotate-[10deg] bg-orange-400 rounded-full top-1/2 left-1/2"
-                            style={{ transform: "translate(-50%, -50%)" }}
-                        >
-                            <h2>storymoving</h2>
+                <div className=" space-y-2">
+                    <div className="text-[18vw] relative  leading-[13vw] uppercase">
+                        <div className="flex w-full justify-between items-end">
+                            <h2 className='serv_h2'>Our</h2>
+                            <p className='font-semibold text-xl  -translate-y-1 capitalize '>Make, Inspire, Export</p>
                         </div>
-                        <div className="flex gap-8">
-                            <h2 className='serv_h2'>Trust</h2>
-                            <h2 className='serv_h2'> the</h2>
-                        </div>
-                        <h2 className='serv_h2'>process</h2>
+                        <h2 className='serv_h2'>Services</h2>
                     </div>
-                    <p className='font-semibold opacity-80'>Make, Inspire, Export</p>
                 </div>
 
                 <div className=" h-[80%] aspect-[9/16] relative overflow-hidden  rounded-lg  ">
@@ -224,25 +183,24 @@ const ServiceSection = () => {
                         <img className=' serv_1_img_1 absolute left-full top-[30%]' src="/icons/services_miton.svg" alt="" />
                         <img className=' serv_1_img_2 absolute left-full top-[10%]' src="/icons/services_miton.svg" alt="" />
                         <img className=' serv_1_img_3 absolute left-1/2 top-[-10%]' src="/icons/services_miton.svg" alt="" />
-                        <div className=" text-white space-y-[4vh]">
+                        <div className=" text-white ">
                             <p>#1</p>
-                            <div className=" uppercase text-[5.5rem] leading-[5rem]">
-                                <h2>strategie</h2>
-                                <h2>creative</h2>
+                            <div className=" uppercase pb-[4vh] text-[4rem] leading-[3.5rem]">
+                                <h2>Brand Identity Design</h2>
                             </div>
-                            <p className='leading-none text-2xl '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, necessitatibus.</p>
+                            <p className='leading-none text-2xl '> Logos, visual systems, brand strategy, and tone of voice</p>
                         </div>
                     </div>
 
                     <div className=" service_2 w-full absolute top-0 -right-full h-full flex flex-col justify-end p-6 pb-10 bg-[#FFBCCB] rounded-lg">
                         <img className=' serv_2_img_1 absolute left-1/2 top-[20%]' src="/icons/services_film.svg" alt="" />
                         <img className=' serv_2_img_2 absolute left-full top-[60%]' src="/icons/services_film.svg" alt="" />
-                        <div className=" text-white space-y-[4vh]">
+                        <div className=" text-white ">
                             <p>#2</p>
-                            <div className=" uppercase text-[5.5rem] leading-[5rem]">
-                                <h2>production</h2>
+                            <div className=" uppercase pb-[4vh] text-[4rem] leading-[3.5rem]">
+                                <h2>Editorial Design</h2>
                             </div>
-                            <p className='leading-none text-2xl '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, necessitatibus.</p>
+                            <p className='leading-none text-2xl '>Magazines, reports, books, and large-format publications</p>
                         </div>
                     </div>
 
@@ -250,24 +208,24 @@ const ServiceSection = () => {
                         <img className=' serv_3_img_1 absolute left-[30%] top-[20%]' src="/icons/services_scissor.svg" alt="" />
                         <img className=' serv_3_img_2 absolute left-full top-[50%]' src="/icons/services_scissor.svg" alt="" />
                         <img className=' serv_3_img_3 absolute left-full top-[65%]' src="/icons/services_scissor.svg" alt="" />
-                        <div className=" text-white space-y-[4vh]">
+                        <div className=" text-white ">
                             <p>#3</p>
-                            <div className=" uppercase text-[5.5rem] leading-[5rem]">
-                                <h2>post - production</h2>
+                            <div className=" uppercase pb-[4vh] text-[4rem] leading-[3.5rem]">
+                                <h2>Communication for Development</h2>
                             </div>
-                            <p className='leading-none text-2xl '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, necessitatibus.</p>
+                            <p className='leading-none text-2xl '>Advocacy campaigns, IEC materials, donor reports, and toolkits</p>
                         </div>
                     </div>
 
                     <div className=" service_4 w-full absolute top-0 -right-full h-full flex flex-col justify-end p-6 pb-10 bg-[#ADA999] rounded-lg">
                         <img className=' serv_4_img_1 absolute left-[5%] top-[15%]' src="/icons/services_luck.svg" alt="" />
                         <img className=' serv_4_img_2 absolute left-[70%] top-[50%]' src="/icons/services_luck.svg" alt="" />
-                        <div className=" text-white space-y-[4vh]">
+                        <div className=" text-white ">
                             <p>#4</p>
-                            <div className=" uppercase text-[5.5rem] leading-[5rem]">
-                                <h2>Distribution</h2>
+                            <div className=" uppercase pb-[4vh] text-[4rem] leading-[3.5rem]">
+                                <h2>Digital & Web Design</h2>
                             </div>
-                            <p className='leading-none text-2xl '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, necessitatibus.</p>
+                            <p className='leading-none text-2xl '> UX/UI, websites, and interactive presentations</p>
                         </div>
                     </div>
 

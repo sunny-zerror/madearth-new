@@ -5,8 +5,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 const glyphs = ["▄", "█", "□", "▀", "►", "●", "○", "▪", "▫", "▲", "▼", "◄", "∞"];
 
 const Hero = () => {
-  const line1 = "THE CREATIVE ↘ STUDIO FOR";
-  const line2 = "▀SCIENCE + TECH BRANDS▫";
+  const line1 = "Design  ↘ That ▫ Connects ";
+  const line2 = "Creativity ▪ That ↗ Resonates";
   const container = useRef(null);
   const charsRef = useRef([]);
   const [expandVideo, setExpandVideo] = useState(false);
@@ -122,7 +122,7 @@ const Hero = () => {
 
     tl.to(".about_head", {
       scale: .4,
-      y: -100,
+      y: -50,
       ease: "expo.inOut",
     })
 
@@ -137,8 +137,12 @@ const Hero = () => {
   return (
     <div className=' hero_paren w-full h-screen overflow-hidden text-center flex-col relative padding center'>
 
-      <div className=" hero_bg_vide brightness-100 absolute w-full h-screen z-[-1]">
+      {/* <div className=" hero_bg_vide brightness-100 absolute w-full h-screen z-[-1]">
         <video loop autoPlay muted playsInline className='cover' src="/videos/hero_bg.mp4"></video>
+      </div> */}
+
+      <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
+        <p>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
       </div>
 
       <div
@@ -170,7 +174,7 @@ const Hero = () => {
         <video
           loop autoPlay muted playsInline
           className='cover'
-          src="https://cdn.prod.website-files.com/67feae17cea1ad395ebd5409%2F6842b4058c67691b340f0089_VAP%20Studio%20-%20SHOWREEL%20%281%29%20%28online-video-cuttercom%29%20%281%29-transcode.mp4"
+          src="/videos/show_reel.mp4"
         ></video>
       </div>
 
@@ -180,11 +184,8 @@ const Hero = () => {
           <p className='text-[10vw] leading-[8vw] uppercase'>Creative studios</p>
         </div>
 
-        <div className=" translate-y-[-8vw] about_para w-full  overflow-hidden flex justify-center">
-          <p className='text-white w-[45%] text-xl'>The companies we work with push the boundaries in Science + Technology. In us,
-            they find a partner who pushes the boundaries in creativity, growth strategy +
-            world-class creative production. Together, we transform how complex brands
-            express themselves in the intelligence age.</p>
+        <div className=" translate-y-[-6vw]   about_para w-full  overflow-hidden flex justify-center">
+          <p className='text-white w-[45%] text-xl'>Mad Earth is a strategic design studio rooted in design thinking and storytelling. We specialize in creating cohesive brand identities and immersive visual experiences that spark connection and clarity. <br /> <br /> With a multidisciplinary approach spanning branding, editorial, and digital design, we partner with clients to shape narratives, systems, and aesthetics that are not only beautiful — but meaningful and effective.</p>
         </div>
 
       </div>
