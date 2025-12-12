@@ -135,7 +135,10 @@ const Hero = () => {
 
 
   return (
-    <div className=' hero_paren w-full h-screen overflow-hidden text-center flex-col relative padding center'>
+    <div
+      style={{
+        background: "linear-gradient( rgb(90, 118, 159) 30.284%, rgb(135, 161, 196) 43.3787%, rgb(193, 211, 230) 58.8313%, rgb(254, 249, 225) 100%)"
+      }} className=' hero_paren w-full h-screen overflow-hidden text-center flex-col relative padding center'>
 
       {/* <div className=" hero_bg_vide brightness-100 absolute w-full h-screen z-[-1]">
         <video loop autoPlay muted playsInline className='cover' src="/videos/hero_bg.mp4"></video>
