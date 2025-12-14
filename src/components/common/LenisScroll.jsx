@@ -1,76 +1,54 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import Lenis from "lenis";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import { usePathname, useSearchParams } from "next/navigation";
-
-gsap.registerPlugin(ScrollTrigger);
+import { usePathname } from "next/navigation";
 
 export default function LenisScroll({ children }) {
   const lenis = useRef(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  // RESET SCROLL ON ROUTE CHANGE
   useEffect(() => {
-    if (lenis.current) {
-      lenis.current.scrollTo(0, { immediate: true });
-      ScrollTrigger.refresh();
-    }
-  }, [pathname, searchParams]);
+    if (lenis.current) lenis.current.scrollTo(0, { immediate: true });
+  }, [pathname]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.innerWidth < 1024) return;
+
+    if (window.innerWidth < 1024) return
 
     const instance = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      smoothTouch: false,
+      smoothTouch: true,
+      direction: "vertical",
+      gestureDirection: "vertical",
+      wheelMultiplier: 0.8,
+      touchMultiplier: 1.2,
+      infinite: false,
     });
 
     lenis.current = instance;
     window.lenis = instance;
 
-    // 🔥 CONNECT LENIS TO GSAP
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value) {
-        if (arguments.length) {
-          instance.scrollTo(value, { immediate: true });
-        }
-        return instance.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-      pinType: document.body.style.transform ? "transform" : "fixed",
-    });
-
-    // RAF LOOP
+    let frame;
     const raf = (time) => {
       instance.raf(time);
-      ScrollTrigger.update();
-      requestAnimationFrame(raf);
+      frame = requestAnimationFrame(raf);
     };
-    requestAnimationFrame(raf);
+    frame = requestAnimationFrame(raf);
 
-    // IMPORTANT
-    ScrollTrigger.defaults({ scroller: document.body });
-    ScrollTrigger.refresh();
+    const handleResize = () => {
+      instance.resize();
+    };
+    window.addEventListener("resize", handleResize);
 
     return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", handleResize);
       instance.destroy();
       lenis.current = null;
       window.lenis = null;
-
-      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
