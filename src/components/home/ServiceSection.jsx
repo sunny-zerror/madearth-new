@@ -1,3 +1,4 @@
+"use client";
 import { useGSAP } from '@gsap/react'
 import { RiMore2Line } from '@remixicon/react'
 import gsap from 'gsap'

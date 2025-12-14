@@ -1,6 +1,8 @@
+"use client";
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { isViewTransitioning } from '../utility/viewTransitionState';
 
 const glyphs = ["▄", "█", "□", "▀", "►", "●", "○", "▪", "▫", "▲", "▼", "◄", "∞"];
 
@@ -11,60 +13,91 @@ const Hero = () => {
   const charsRef = useRef([]);
   const [expandVideo, setExpandVideo] = useState(false);
 
-  useLayoutEffect(() => {
-    const chars = gsap.utils.toArray(container.current.querySelectorAll(".char"));
-    charsRef.current = chars.map((el) => ({
-      el,
-      char: el.innerText,
-      isCoded: true
-    }));
-  }, []);
-
-  useEffect(() => {
-    startInitialGlitch();
-    const timeout = setTimeout(() => {
-      charsRef.current.forEach(c => {
-        c.el.innerText = c.char;
-        c.isCoded = false;
-      });
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  const startInitialGlitch = () => {
+    const startInitialGlitch = () => {
     charsRef.current.forEach((c) => {
       c.isCoded = true;
     });
     glitchTick();
   };
 
-  const startGlitch = () => {
-    charsRef.current.forEach((c) => {
-      c.isCoded = Math.random() > 0.5;
-    });
-    glitchTick();
-  };
+const startGlitch = () => {
+  if (isViewTransitioning) return;
 
-  const glitchTick = () => {
-    let stillGlitching = false;
+  charsRef.current.forEach((c) => {
+    c.isCoded = Math.random() > 0.5;
+  });
 
-    charsRef.current.forEach((c) => {
-      if (c.isCoded) {
-        stillGlitching = true;
+  glitchTick();
+};
 
-        c.isCoded = Math.random() > 0.25;
 
-        c.el.innerText = c.isCoded
-          ? [...glyphs, c.char][Math.floor(Math.random() * (glyphs.length + 1))]
-          : c.char;
-      }
-    });
+const glitchTick = () => {
+  let stillGlitching = false;
 
-    if (stillGlitching) {
-      setTimeout(glitchTick, 80);
+  charsRef.current.forEach((c) => {
+    if (c.isCoded) {
+      stillGlitching = true;
+
+      c.isCoded = Math.random() > 0.25;
+
+      c.el.textContent = c.isCoded
+        ? [...glyphs, c.char][
+            Math.floor(Math.random() * (glyphs.length + 1))
+          ]
+        : c.char;
     }
+  });
+
+  if (stillGlitching) {
+    const t = setTimeout(glitchTick, 80);
+    charsRef.current.forEach(c => (c.timeout = t));
+  }
+};
+
+
+useLayoutEffect(() => {
+  const chars = gsap.utils.toArray(
+    container.current.querySelectorAll(".char")
+  );
+
+  charsRef.current = chars.map((el) => ({
+    el,
+    char: el.textContent, // ORIGINAL TEXT
+    isCoded: false,
+    timeout: null
+  }));
+}, []);
+
+
+  useEffect(() => {
+  // ✅ ALWAYS restore text first
+  charsRef.current.forEach(c => {
+    c.el.textContent = c.char;
+    c.isCoded = false;
+  });
+
+  // then start glitch
+  startInitialGlitch();
+
+  const timeout = setTimeout(() => {
+    charsRef.current.forEach(c => {
+      c.el.textContent = c.char;
+      c.isCoded = false;
+    });
+  }, 3000);
+
+  return () => {
+    clearTimeout(timeout);
+
+    // ✅ CLEANUP on route change
+    charsRef.current.forEach(c => {
+      if (c.timeout) clearTimeout(c.timeout);
+      c.el.textContent = c.char;
+      c.isCoded = false;
+    });
   };
+}, []);
+
 
   useEffect(() => {
     const lenis = window.lenis;
@@ -87,7 +120,6 @@ const Hero = () => {
     });
 
   }, [expandVideo]);
-
 
   useGSAP(() => {
     const tl = gsap.timeline({

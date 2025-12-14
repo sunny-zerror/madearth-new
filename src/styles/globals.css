@@ -24,19 +24,158 @@ button {
   align-items: center;
   justify-content: center;
 }
-.padding{
+.padding {
   padding-inline: 3rem;
 }
-.cover{
+.cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.footer_desc{
-  background: linear-gradient(#ede8e300 0%, #ede8e3 17.9459%, #87a1c4 45.2668%, #182644 88.0191%, #1e1310 100%);
+.footer_desc {
+  background: linear-gradient(
+    #ede8e300 0%,
+    #ede8e3 17.9459%,
+    #87a1c4 45.2668%,
+    #182644 88.0191%,
+    #1e1310 100%
+  );
 }
 
-.seq_parent{
-  background: linear-gradient(rgb(30, 19, 16) 25.1883%, rgb(144, 60, 39) 50.2763%, rgb(228, 108, 68) 76.0487%, rgb(237, 148, 84) 100%);
+.seq_parent {
+  background: linear-gradient(
+    rgb(30, 19, 16) 25.1883%,
+    rgb(144, 60, 39) 50.2763%,
+    rgb(228, 108, 68) 76.0487%,
+    rgb(237, 148, 84) 100%
+  );
 }
+
+
+
+/* page transition css */
+/* page transition css */
+/* page transition css */
+/* page transition css */
+/* page transition css */
+@media (prefers-reduced-motion) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  backface-visibility: hidden;
+}
+
+@property --view-transition-wipe-offset {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes view-transition-exit {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg)
+      rotateZ(0deg);
+    --view-transition-wipe-offset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg)
+      rotateZ(0deg);
+    --view-transition-wipe-offset: 1;
+  }
+}
+
+::view-transition-old(root) {
+  animation-name: view-transition-exit;
+  animation-duration: .6s;
+  animation-delay: 0s;
+  animation-timing-function: cubic-bezier(0.27, 0, 0.51, 1);
+  animation-fill-mode: both;
+  mask-image: linear-gradient(
+    360deg,
+    transparent
+      calc(
+        calc(0% - 100%) +
+          calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+      ),
+    black calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+  );
+  -webkit-mask-image: linear-gradient(
+    360deg,
+    transparent
+      calc(
+        calc(0% - 100%) +
+          calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+      ),
+    black calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+  );
+}
+
+@property --view-transition-wipe-offset {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes view-transition-enter {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg)
+      rotateZ(0deg);
+    --view-transition-wipe-offset: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg)
+      rotateZ(0deg);
+    --view-transition-wipe-offset: 1;
+  }
+}
+
+::view-transition-new(root) {
+  animation-name: view-transition-enter;
+  animation-duration: .6s;
+  animation-delay: 0s;
+  animation-timing-function: cubic-bezier(0.27, 0, 0.51, 1);
+  animation-fill-mode: both;
+  mask-image: linear-gradient(
+    360deg,
+    black
+      calc(
+        calc(0% - 100%) +
+          calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+      ),
+    transparent calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+  );
+  -webkit-mask-image: linear-gradient(
+    360deg,
+    black
+      calc(
+        calc(0% - 100%) +
+          calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+      ),
+    transparent calc(calc(100% + 100%) * var(--view-transition-wipe-offset))
+  );
+}
+
+
+/* page transition css */
+/* page transition css */
+/* page transition css */
+/* page transition css */
+/* page transition css */

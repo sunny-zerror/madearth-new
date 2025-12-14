@@ -1,9 +1,11 @@
+"use client";
 import React, { useEffect, useRef } from 'react'
 import { WorksData } from '@/data/WorksData'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 import { RiArrowRightLine } from '@remixicon/react'
+import { Link } from 'next-view-transitions';
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -132,7 +134,7 @@ const WorkSection = () => {
                     </div>
 
                     <div className="w-full center mt-10">
-                        <a href="/work">
+                        <Link href="/work">
                         <button onMouseEnter={buttonHover} onMouseLeave={buttonHoverOut} className=' relative flex group '>
                             <div className=" arrow_cir_bx absolute bg-black text-white size-9 -left-[3rem]  center rounded-full ">
                                 <RiArrowRightLine size={16} />
@@ -143,7 +145,7 @@ const WorkSection = () => {
                                 </p>
                             </div>
                         </button>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

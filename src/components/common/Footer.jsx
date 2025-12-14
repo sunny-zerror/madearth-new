@@ -1,5 +1,6 @@
+"use client";
 import { RiArrowRightLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiWhatsappLine } from '@remixicon/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
@@ -7,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 const Footer = () => {
   const imgRef = useRef(null);
   const cachedImages = useRef([]);
+  const animationRef = useRef(null);
 
   const totalFrames = 128;
   const basePath = "/images/flower_frame/";
@@ -16,42 +18,59 @@ const Footer = () => {
     return `${basePath}frame${num}.webp`;
   });
 
-  useEffect(() => {
-    const preloadImages = async () => {
-      const promises = images.map((src) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-
-          img.onload = () => resolve(img);
-          img.onerror = () => resolve(img);
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      const preloadImages = async () => {
+        const promises = images.map((src) => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(img);
+          });
         });
-      });
 
-      cachedImages.current = await Promise.all(promises);
-      startScrollAnimation();
+        cachedImages.current = await Promise.all(promises);
+
+        // RESET IMAGE
+        imgRef.current.src = cachedImages.current[0].src;
+
+        let frame = { index: 0 };
+
+        animationRef.current = gsap.to(frame, {
+          index: images.length - 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".seq_parent",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+            scroller: document.body,
+            // markers: true,
+          },
+          onUpdate: () => {
+            imgRef.current.src =
+              cachedImages.current[Math.floor(frame.index)].src;
+          },
+        });
+
+        // IMPORTANT
+        setTimeout(() => {
+          ScrollTrigger.refresh(true);
+        }, 100);
+      };
+
+      preloadImages();
+    });
+
+    return () => {
+      ctx.revert();
+
+      // Kill everything on route change
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      animationRef.current?.kill();
     };
-
-    preloadImages();
-
-    function startScrollAnimation() {
-      let frame = { index: 0 };
-
-      gsap.to(frame, {
-        index: images.length - 1,
-        ease: "linear",
-        scrollTrigger: {
-          trigger: ".seq_parent",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-        onUpdate: () => {
-          const idx = Math.floor(frame.index);
-          imgRef.current.src = cachedImages.current[idx].src;
-        },
-      });
-    }
   }, []);
 
   return (

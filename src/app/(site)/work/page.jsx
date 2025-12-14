@@ -1,3 +1,4 @@
+"use client"
 import { WorksData } from '@/data/WorksData'
 import { useGSAP } from '@gsap/react';
 import { RiArrowDownSLine, RiArrowRightSLine } from '@remixicon/react'
@@ -34,7 +35,7 @@ const filter_industries = [
     "Beauty & Personal Care",
 ];
 
-const index = () => {
+const WorkPage = () => {
 
     const [selectedServices, setSelectedServices] = useState([])
     const [openServicesDrop, setOpenServicesDrop] = useState(false)
@@ -72,7 +73,7 @@ const index = () => {
         <>
             <div
                 style={{
-                    background: "linear-gradient(180deg, #c1d3e6 0%, rgb(250, 253, 247) 61.74514358108109%, var(--token-b1816368-01d4-4559-ab1b-4ed45f4a1284, rgb(255, 255, 255)) 100%)"
+                    background: "linear-gradient(180deg, #87a1c4 0%, rgb(250, 253, 247) 61.74514358108109%, var(--token-b1816368-01d4-4559-ab1b-4ed45f4a1284, rgb(255, 255, 255)) 100%)"
                 }}
                 className=' w-full h-[50vh] flex items-end padding'>
 
@@ -172,4 +173,4 @@ const index = () => {
     )
 }
 
-export default index
+export default WorkPage
