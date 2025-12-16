@@ -13,90 +13,90 @@ const Hero = () => {
   const charsRef = useRef([]);
   const [expandVideo, setExpandVideo] = useState(false);
 
-    const startInitialGlitch = () => {
+  const startInitialGlitch = () => {
     charsRef.current.forEach((c) => {
       c.isCoded = true;
     });
     glitchTick();
   };
 
-const startGlitch = () => {
-  if (isViewTransitioning) return;
+  const startGlitch = () => {
+    if (isViewTransitioning) return;
 
-  charsRef.current.forEach((c) => {
-    c.isCoded = Math.random() > 0.5;
-  });
+    charsRef.current.forEach((c) => {
+      c.isCoded = Math.random() > 0.5;
+    });
 
-  glitchTick();
-};
+    glitchTick();
+  };
 
 
-const glitchTick = () => {
-  let stillGlitching = false;
+  const glitchTick = () => {
+    let stillGlitching = false;
 
-  charsRef.current.forEach((c) => {
-    if (c.isCoded) {
-      stillGlitching = true;
+    charsRef.current.forEach((c) => {
+      if (c.isCoded) {
+        stillGlitching = true;
 
-      c.isCoded = Math.random() > 0.25;
+        c.isCoded = Math.random() > 0.25;
 
-      c.el.textContent = c.isCoded
-        ? [...glyphs, c.char][
-            Math.floor(Math.random() * (glyphs.length + 1))
+        c.el.textContent = c.isCoded
+          ? [...glyphs, c.char][
+          Math.floor(Math.random() * (glyphs.length + 1))
           ]
-        : c.char;
+          : c.char;
+      }
+    });
+
+    if (stillGlitching) {
+      const t = setTimeout(glitchTick, 80);
+      charsRef.current.forEach(c => (c.timeout = t));
     }
-  });
-
-  if (stillGlitching) {
-    const t = setTimeout(glitchTick, 80);
-    charsRef.current.forEach(c => (c.timeout = t));
-  }
-};
+  };
 
 
-useLayoutEffect(() => {
-  const chars = gsap.utils.toArray(
-    container.current.querySelectorAll(".char")
-  );
+  useLayoutEffect(() => {
+    const chars = gsap.utils.toArray(
+      container.current.querySelectorAll(".char")
+    );
 
-  charsRef.current = chars.map((el) => ({
-    el,
-    char: el.textContent, // ORIGINAL TEXT
-    isCoded: false,
-    timeout: null
-  }));
-}, []);
+    charsRef.current = chars.map((el) => ({
+      el,
+      char: el.textContent, // ORIGINAL TEXT
+      isCoded: false,
+      timeout: null
+    }));
+  }, []);
 
 
   useEffect(() => {
-  // ✅ ALWAYS restore text first
-  charsRef.current.forEach(c => {
-    c.el.textContent = c.char;
-    c.isCoded = false;
-  });
-
-  // then start glitch
-  startInitialGlitch();
-
-  const timeout = setTimeout(() => {
+    // ✅ ALWAYS restore text first
     charsRef.current.forEach(c => {
       c.el.textContent = c.char;
       c.isCoded = false;
     });
-  }, 3000);
 
-  return () => {
-    clearTimeout(timeout);
+    // then start glitch
+    startInitialGlitch();
 
-    // ✅ CLEANUP on route change
-    charsRef.current.forEach(c => {
-      if (c.timeout) clearTimeout(c.timeout);
-      c.el.textContent = c.char;
-      c.isCoded = false;
-    });
-  };
-}, []);
+    const timeout = setTimeout(() => {
+      charsRef.current.forEach(c => {
+        c.el.textContent = c.char;
+        c.isCoded = false;
+      });
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+
+      // ✅ CLEANUP on route change
+      charsRef.current.forEach(c => {
+        if (c.timeout) clearTimeout(c.timeout);
+        c.el.textContent = c.char;
+        c.isCoded = false;
+      });
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -125,8 +125,8 @@ useLayoutEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero_paren",
-        pin: true,
         start: "top top",
+        end:"bottom bottom",
         scrub: .4
       }
     })
@@ -167,64 +167,66 @@ useLayoutEffect(() => {
 
 
   return (
-    <div
-      style={{
-        background: "linear-gradient( rgb(90, 118, 159) 30.284%, rgb(135, 161, 196) 43.3787%, rgb(193, 211, 230) 58.8313%, rgb(254, 249, 225) 100%)"
-      }} className=' hero_paren w-full h-screen overflow-hidden text-center flex-col relative padding center'>
+    <div className=' hero_paren w-full h-[250vh]'>
+      <div
+        style={{
+          background: "linear-gradient( to bottom , #6FC4D7 30.284%, transparent 100%)"
+        }} className='  sticky top-0 w-full h-screen overflow-hidden text-center flex-col  padding center'>
 
-      {/* <div className=" hero_bg_vide brightness-100 absolute w-full h-screen z-[-1]">
+        {/* <div className=" hero_bg_vide brightness-100 absolute w-full h-screen z-[-1]">
         <video loop autoPlay muted playsInline className='cover' src="/videos/hero_bg.mp4"></video>
       </div> */}
 
-      <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
-        <p>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
-      </div>
-
-      <div
-        ref={container}
-        onMouseEnter={startGlitch}
-        className="whitespace-nowrap font-semibold flex flex-col  cursor-pointer select-none"
-      >
-        <p className="capitalize text-6xl leading-none">
-          {line1.split("").map((c, i) => (
-            <span key={i} className="char inline-block">
-              {c === " " ? "\u00A0" : c}
-            </span>
-          ))}
-        </p>
-
-        <p className="capitalize text-6xl leading-none">
-          {line2.split("").map((c, i) => (
-            <span key={i} className="char inline-block">
-              {c === " " ? "\u00A0" : c}
-            </span>
-          ))}
-        </p>
-      </div>
-
-      <div
-        onClick={() => setExpandVideo(!expandVideo)}
-        className="cursor-pointer show_reel rounded-sm overflow-hidden absolute z-[9] bottom-12 aspect-video w-[18vw] right-12"
-      >
-        <video
-          loop autoPlay muted playsInline
-          className='cover'
-          src="/videos/show_reel.mp4"
-        ></video>
-      </div>
-
-      <div className="about_paren absolute text-white bg-[#182644] center flex-col h-0 overflow-hidden w-full z-[15] ">
-        <div className=" about_head ">
-          <h2 className='text-[35vw] leading-[26vw]'>MADEARTH</h2>
-          <p className='text-[10vw] leading-[8vw] uppercase'>Creative studios</p>
+        <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
+          <p>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
         </div>
 
-        <div className=" translate-y-[-6vw]   about_para w-full  overflow-hidden flex justify-center">
-          <p className='text-white w-[45%] text-xl'>Mad Earth is a strategic design studio rooted in design thinking and storytelling. We specialize in creating cohesive brand identities and immersive visual experiences that spark connection and clarity. <br /> <br /> With a multidisciplinary approach spanning branding, editorial, and digital design, we partner with clients to shape narratives, systems, and aesthetics that are not only beautiful — but meaningful and effective.</p>
+        <div
+          ref={container}
+          onMouseEnter={startGlitch}
+          className="whitespace-nowrap font-semibold flex flex-col  cursor-pointer select-none"
+        >
+          <p className="capitalize text-6xl leading-none">
+            {line1.split("").map((c, i) => (
+              <span key={i} className="char inline-block">
+                {c === " " ? "\u00A0" : c}
+              </span>
+            ))}
+          </p>
+
+          <p className="capitalize text-6xl leading-none">
+            {line2.split("").map((c, i) => (
+              <span key={i} className="char inline-block">
+                {c === " " ? "\u00A0" : c}
+              </span>
+            ))}
+          </p>
+        </div>
+
+        <div
+          onClick={() => setExpandVideo(!expandVideo)}
+          className="cursor-pointer show_reel rounded-sm overflow-hidden absolute z-[9] bottom-12 aspect-video w-[18vw] right-12"
+        >
+          <video
+            loop autoPlay muted playsInline
+            className='cover'
+            src="/videos/show_reel.mp4"
+          ></video>
+        </div>
+
+        <div className="about_paren absolute  bg-[#A8D37E] center flex-col h-0 overflow-hidden w-full z-[15] ">
+          <div className=" about_head ">
+            <h2 className='text-[35vw] leading-[26vw]'>MADEARTH</h2>
+            <p className='text-[10vw] leading-[8vw] uppercase'>Creative studios</p>
+          </div>
+
+          <div className=" translate-y-[-6vw]   about_para w-full  overflow-hidden flex justify-center">
+            <p className=' w-[45%] text-xl'>Mad Earth is a strategic design studio rooted in design thinking and storytelling. We specialize in creating cohesive brand identities and immersive visual experiences that spark connection and clarity. <br /> <br /> With a multidisciplinary approach spanning branding, editorial, and digital design, we partner with clients to shape narratives, systems, and aesthetics that are not only beautiful — but meaningful and effective.</p>
+          </div>
+
         </div>
 
       </div>
-
     </div>
   );
 };

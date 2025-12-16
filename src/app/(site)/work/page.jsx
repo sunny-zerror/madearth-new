@@ -72,14 +72,10 @@ const WorkPage = () => {
     return (
         <>
             <div
-                style={{
-                    background: "linear-gradient(180deg, #87a1c4 0%, rgb(250, 253, 247) 61.74514358108109%, var(--token-b1816368-01d4-4559-ab1b-4ed45f4a1284, rgb(255, 255, 255)) 100%)"
-                }}
-                className=' w-full h-[50vh] flex items-end padding'>
-
+                className=' w-full h-[60vh] flex items-end padding bg-[linear-gradient(to_bottom,#A8D37E_20.284%,transparent)]'>
                 <p className='text-6xl uppercase font-semibold'>Our work <br />From idea to exit</p>
             </div>
-            <div className="filter_paren padding h-[30vh]">
+            <div className="filter_paren padding h-[20vh]">
                 <div className="w-full h-full items-end gap-10 text-4xl uppercase flex">
                     <div onClick={() => setOpenServicesDrop(!openServicesDrop)} className={`w-1/2  flex cursor-pointer ${openServicesDrop && `px-4`} hover:px-4 transition-all duration-300 ease-out  items-center justify-between  border-black border-b`}>
                         <h2>

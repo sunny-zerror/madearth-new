@@ -15,7 +15,7 @@ const menuLinks = [
     title: "work", href: "/work"
   },
   {
-    title: "services", href: "/services"
+    title: "contact", href: "/contact"
   },
 ]
 

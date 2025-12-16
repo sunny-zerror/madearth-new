@@ -5,6 +5,8 @@
   user-select: none;
 }
 body {
+  --cyan_bg:"#6FC4D7";
+  --green_bg:"#A8D37E"
   overflow-x: hidden;
   background-color: white;
   width: 100%;
@@ -33,20 +35,11 @@ button {
   object-fit: cover;
 }
 
-.footer_desc {
-  background: linear-gradient(
-    #ede8e300 0%,
-    #ede8e3 17.9459%,
-    #87a1c4 45.2668%,
-    #182644 88.0191%,
-    #1e1310 100%
-  );
-}
-
 .seq_parent {
   background: linear-gradient(
-    rgb(30, 19, 16) 25.1883%,
-    rgb(144, 60, 39) 50.2763%,
+    transparent,
+    /* rgb(30, 19, 16) 25.1883%, */
+    rgb(144, 60, 39) 28.2763%,
     rgb(228, 108, 68) 76.0487%,
     rgb(237, 148, 84) 100%
   );
@@ -101,7 +94,7 @@ button {
 
 ::view-transition-old(root) {
   animation-name: view-transition-exit;
-  animation-duration: .6s;
+  animation-duration: 1s;
   animation-delay: 0s;
   animation-timing-function: cubic-bezier(0.27, 0, 0.51, 1);
   animation-fill-mode: both;
@@ -149,7 +142,7 @@ button {
 
 ::view-transition-new(root) {
   animation-name: view-transition-enter;
-  animation-duration: .6s;
+  animation-duration: 1s;
   animation-delay: 0s;
   animation-timing-function: cubic-bezier(0.27, 0, 0.51, 1);
   animation-fill-mode: both;

@@ -3,12 +3,17 @@ import { RiArrowRightLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiWh
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
+import MagnetButton from '../buttons/MagnetButton';
+import { useGSAP } from '@gsap/react';
+import { usePathname } from 'next/navigation';
 gsap.registerPlugin(ScrollTrigger)
 
 const Footer = () => {
+  const pathname = usePathname();
   const imgRef = useRef(null);
-  const cachedImages = useRef([]);
-  const animationRef = useRef(null);
+  const seqRef = useRef(null);
+  const imagesRef = useRef([]);
+  const initialized = useRef(false);
 
   const totalFrames = 128;
   const basePath = "/images/flower_frame/";
@@ -18,76 +23,56 @@ const Footer = () => {
     return `${basePath}frame${num}.webp`;
   });
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      const preloadImages = async () => {
-        const promises = images.map((src) => {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => resolve(img);
-            img.onerror = () => resolve(img);
-          });
-        });
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
 
-        cachedImages.current = await Promise.all(promises);
+    imagesRef.current = images.map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+  }, []);
 
-        // RESET IMAGE
-        imgRef.current.src = cachedImages.current[0].src;
+  useEffect(() => {
+    if (!imgRef.current || !seqRef.current) return;
 
-        let frame = { index: 0 };
+    imgRef.current.src = `${basePath}frame001.webp`;
 
-        animationRef.current = gsap.to(frame, {
-          index: images.length - 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".seq_parent",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-            invalidateOnRefresh: true,
-            scroller: document.body,
-            // markers: true,
-          },
-          onUpdate: () => {
-            imgRef.current.src =
-              cachedImages.current[Math.floor(frame.index)].src;
-          },
-        });
+    const obj = { frame: 0 };
 
-        // IMPORTANT
-        setTimeout(() => {
-          ScrollTrigger.refresh(true);
-        }, 100);
-      };
+    const trigger = ScrollTrigger.create({
+      trigger: seqRef.current,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      invalidateOnRefresh: true,
 
-      preloadImages();
+      onUpdate: (self) => {
+        const frame = Math.min(
+          totalFrames - 1,
+          Math.floor(self.progress * totalFrames)
+        );
+
+        if (obj.frame !== frame) {
+          obj.frame = frame;
+          imgRef.current.src = imagesRef.current[frame].src;
+        }
+      },
     });
 
     return () => {
-      ctx.revert();
-
-      // Kill everything on route change
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      animationRef.current?.kill();
+      trigger.kill();
     };
-  }, []);
+  }, [pathname]);
+
 
   return (
     <>
       <div className=' footer_paren w-full pt-20'>
-
-        <div className=" footer_desc padding w-full h-[80vh] space-y-32">
-          <p className='text-6xl '>Ready to make the leap? <br />
-            Share your vision, and we’ll help shape it into <br /> something unforgettable.</p>
-
-          <button className='px-4 py-2 font-semibold bg-black/5 backdrop-blur-lg rounded-full'>Our Approach</button>
-        </div>
-
-        <div className="footer_links_paren bg-[#1e1310] text-white padding">
-          <div className="flex gap-2 items-center  text-3xl">
-            <p>Work with us</p>
-            <RiArrowRightLine />
+        <div className="footer_links_paren  padding">
+          <div className="flex gap-2 items-center  padding">
+            <MagnetButton link={"/contact"} text={"Contact Us"} />
           </div>
           <div className="w-full grid grid-cols-[25%_25%_50%] mt-14">
             <div className="w-full space-y-5" >
@@ -125,8 +110,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="seq_parent h-[250vh] w-full flex justify-center relative">
-        <img ref={imgRef} src={`${basePath}frame001.webp`} className="h-screen sticky top-0" />
+      <div ref={seqRef} className="seq_parent h-[250vh] w-full  flex justify-center relative">
+        <img
+          ref={imgRef}
+          src={`${basePath}frame001.webp`}
+          className="h-screen sticky top-0"
+          alt=""
+        />
       </div>
     </>
   );

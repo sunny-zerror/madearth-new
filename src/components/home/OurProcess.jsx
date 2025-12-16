@@ -78,7 +78,7 @@ const OurProcess = () => {
     })
 
     return (
-        <div className='process_paren padding w-full'>
+        <div className='process_paren padding w-full '>
 
             <h2 className='uppercase text-7xl'>Our Process</h2>
 
