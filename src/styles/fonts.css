@@ -3,6 +3,10 @@
   src: url("../../public/fonts/ppNeu/PPNeueMontreal-Regular.woff2");
 }
 @font-face {
+  font-family: "ppNeu_medium";
+  src: url("../../public/fonts/ppNeu/PPNeueMontreal-Medium.woff2");
+}
+@font-face {
   font-family: "bandit";
   src: url("../../public/fonts/bandit.woff2");
 }
@@ -20,4 +24,7 @@ a,
 button,
 input {
   font-family: ppNeu;
+}
+.medium{
+  font-family: ppNeu_medium;
 }

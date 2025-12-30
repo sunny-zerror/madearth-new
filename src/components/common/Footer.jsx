@@ -1,19 +1,20 @@
 "use client";
-import { RiArrowRightLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiWhatsappLine } from '@remixicon/react'
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import gsap from "gsap"
-import ScrollTrigger from "gsap/dist/ScrollTrigger"
-import MagnetButton from '../buttons/MagnetButton';
-import { useGSAP } from '@gsap/react';
-import { usePathname } from 'next/navigation';
-gsap.registerPlugin(ScrollTrigger)
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import { usePathname } from "next/navigation";
+import MagnetButton from "../buttons/MagnetButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const pathname = usePathname();
-  const imgRef = useRef(null);
   const seqRef = useRef(null);
   const imagesRef = useRef([]);
   const initialized = useRef(false);
+
+  const [frame, setFrame] = useState(0);
 
   const totalFrames = 128;
   const basePath = "/images/flower_frame/";
@@ -28,18 +29,14 @@ const Footer = () => {
     initialized.current = true;
 
     imagesRef.current = images.map((src) => {
-      const img = new Image();
+      const img = new window.Image();
       img.src = src;
       return img;
     });
   }, []);
 
   useEffect(() => {
-    if (!imgRef.current || !seqRef.current) return;
-
-    imgRef.current.src = `${basePath}frame001.webp`;
-
-    const obj = { frame: 0 };
+    if (!seqRef.current) return;
 
     const trigger = ScrollTrigger.create({
       trigger: seqRef.current,
@@ -47,28 +44,21 @@ const Footer = () => {
       end: "bottom bottom",
       scrub: true,
       invalidateOnRefresh: true,
-
       onUpdate: (self) => {
-        const frame = Math.min(
+        const nextFrame = Math.min(
           totalFrames - 1,
           Math.floor(self.progress * totalFrames)
         );
-
-        if (obj.frame !== frame) {
-          obj.frame = frame;
-          imgRef.current.src = imagesRef.current[frame].src;
-        }
+        setFrame(nextFrame);
       },
     });
 
-    return () => {
-      trigger.kill();
-    };
+    return () => trigger.kill();
   }, [pathname]);
-
 
   return (
     <>
+      {/* footer content */}
       <div className=' footer_paren w-full pt-20'>
         <div className="footer_links_paren  padding">
           <div className="flex gap-2 items-center  padding">
@@ -110,12 +100,20 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div ref={seqRef} className="seq_parent h-[250vh] w-full  flex justify-center relative">
-        <img
-          ref={imgRef}
-          src={`${basePath}frame001.webp`}
-          className="h-screen sticky top-0"
-          alt=""
+
+      {/* sequence */}
+      <div
+        ref={seqRef}
+        className="seq_parent h-[300vh] w-full flex justify-center relative"
+      >
+        <Image
+          src={images[frame]}
+          alt="laoding"
+          width={1920}
+          height={1080}
+          priority
+          unoptimized
+          className="h-screen w-auto sticky top-0"
         />
       </div>
     </>

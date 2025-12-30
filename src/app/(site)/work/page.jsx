@@ -3,6 +3,7 @@ import { WorksData } from '@/data/WorksData'
 import { useGSAP } from '@gsap/react';
 import { RiArrowDownSLine, RiArrowRightSLine } from '@remixicon/react'
 import gsap from 'gsap';
+import { Link } from 'next-view-transitions';
 import React, { useEffect, useState } from 'react'
 
 const filter_services = [
@@ -72,7 +73,7 @@ const WorkPage = () => {
     return (
         <>
             <div
-                className=' w-full h-[60vh] flex items-end padding bg-[linear-gradient(to_bottom,#A8D37E_20.284%,transparent)]'>
+                className=' w-full h-[55vh] flex items-end padding bg-[linear-gradient(to_bottom,#A8D37E_20.284%,transparent)]'>
                 <p className='text-6xl uppercase font-semibold'>Our work <br />From idea to exit</p>
             </div>
             <div className="filter_paren padding h-[20vh]">
@@ -140,7 +141,8 @@ const WorkPage = () => {
 
             <div className="grid padding py-10 gap-x-3 gap-y-10 grid-cols-4">
                 {WorksData.map((item, i) => (
-                    <div
+                    <Link
+                        href={`/work/${item.slug}`}
                         key={i}
                         className="w-full cursor-pointer  overflow-hidden relative brightness-90  group ">
                         <div className="  relative rounded-xl aspect-[3/4] w-full overflow-hidden">
@@ -161,8 +163,8 @@ const WorkPage = () => {
                         <h2 className=' text-4xl mt-2 leading-none  uppercase'>
                             {item.title}
                         </h2>
-                        <p className='leading-none opacity-70'>{item.desc}</p>
-                    </div>
+                        <p className='leading-none opacity-70'>{item.subtitle}</p>
+                    </Link>
                 ))}
             </div>
         </>
