@@ -45,6 +45,10 @@ button {
   );
 }
 
+.card {
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
 
 
 /* page transition css */
