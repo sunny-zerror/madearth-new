@@ -73,8 +73,11 @@ const WorkPage = () => {
     return (
         <>
             <div
-                className=' w-full h-[55vh] flex items-end padding bg-[linear-gradient(to_bottom,#A8D37E_20.284%,transparent)]'>
-                <p className='text-6xl uppercase font-semibold'>Our work <br />From idea to exit</p>
+                className=' w-full h-[55vh] flex flex-col justify-end padding bg-[linear-gradient(to_bottom,#A8D37E_20.284%,transparent)]'>
+                <h2 className='text-8xl uppercase '>Our work</h2>
+                <p className='text-2xl capitalize leading-none opacity-70'>
+                    From idea to exit
+                </p>
             </div>
             <div className="filter_paren padding h-[20vh]">
                 <div className="w-full h-full items-end gap-10 text-4xl uppercase flex">
@@ -112,7 +115,7 @@ const WorkPage = () => {
                                 key={i}
                                 onClick={() => handleSelect(item, selectedServices, setSelectedServices)}
                                 className={`cursor-pointer px-4 py-2 rounded-full transition duration-300 
-          ${isSelected ? "bg-black text-white" : "hover:bg-black/5"}
+          ${isSelected ? "bg-[#A8D37E] text-black" : "hover:bg-black/5"}
         `}
                             >
                                 <p className="text-xl">{item}</p>
@@ -129,7 +132,7 @@ const WorkPage = () => {
                                 key={i}
                                 onClick={() => handleSelect(item, selectedIndustries, setSelectedIndustries)}
                                 className={`cursor-pointer px-4 py-2 rounded-full transition duration-300 
-          ${isSelected ? "bg-black text-white" : "hover:bg-black/5"}
+          ${isSelected ? "bg-[#A8D37E] text-black" : "hover:bg-black/5"}
         `}
                             >
                                 <p className="text-xl">{item}</p>
@@ -139,7 +142,7 @@ const WorkPage = () => {
                 </div>
             </div>
 
-            <div className="grid padding py-10 gap-x-3 gap-y-10 grid-cols-4">
+            <div className="grid padding py-14 gap-x-3 gap-y-10 grid-cols-4">
                 {WorksData.map((item, i) => (
                     <Link
                         href={`/work/${item.slug}`}

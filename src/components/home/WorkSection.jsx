@@ -17,7 +17,7 @@ const WorkSection = () => {
         gsap.from(".wrk_txt", {
             scrollTrigger: {
                 trigger: ".wrk_paren",
-                start: "top bottom",
+                start: "top 95%",
                 end: "top top",
                 scrub: true,
             },
@@ -41,7 +41,7 @@ const WorkSection = () => {
 
     useEffect(() => {
         const elems = gsap.utils.toArray(".crd_img");
-        const order = [1, 3, 2, 0];
+        const order = [1, 3, 2, 0 ,4 ,6 , 5, 7];
         const seq = order.map(i => elems[i]).filter(Boolean);
 
         const tl = gsap.timeline({
@@ -95,12 +95,13 @@ const WorkSection = () => {
                 <div className=" translate-y-[-12vw]  wrks_crds_pren ">
                     <div
                         ref={el => (cardsRef.current = el)}
-                        className="w-full flex gap-10 items-center justify-center group"
+                        className="w-full grid grid-cols-4 gap-10 items-center justify-center group"
                     >
-                        {WorksData.slice(0, 4).map((item, i) => (
+                        {WorksData.map((item, i) => (
                             <div
                                 key={i}
                                 className="w-[20vw] card cursor-pointer overflow-hidden relative transition duration-300 brightness-90  group-hover:brightness-50 hover:brightness-100">
+                                    
                                 <div className="crd_img scale-0 relative rounded-xl aspect-[3/4] w-full overflow-hidden">
                                     <video
                                         src={item.show_reel}
@@ -117,7 +118,7 @@ const WorkSection = () => {
                                     />
                                 </div>
                                 <h2 className="text-5xl mt-2 leading-none uppercase">{item.title}</h2>
-                                <p className="leading-none opacity-70">{item.desc}</p>
+                                <p className="leading-none opacity-70">{item.subtitle}</p>
                             </div>
                         ))}
                     </div>

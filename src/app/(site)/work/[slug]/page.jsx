@@ -19,9 +19,9 @@ const Page = () => {
     return (
         <>
             <>
-                <div className="w-full h-[55vh] flex flex-col justify-end padding bg-[linear-gradient(to_bottom,#eaf3e2_20%,transparent)]">
-                    <p className="text-6xl uppercase font-semibold">{work.title}</p>
-                    <p className="text-4xl opacity-70">{work.subtitle}</p>
+                <div className="w-full h-[55vh] flex flex-col justify-end padding bg-[linear-gradient(to_bottom,#eaffd7_40%,transparent)]">
+                    <h2 className="text-8xl uppercase  ">{work.title}</h2>
+                    <p className="text-2xl capitalize leading-none opacity-70">{work.subtitle}</p>
                 </div>
 
                 <div className="w-full padding mt-20 flex gap-1">
@@ -133,9 +133,11 @@ const Page = () => {
             </>
 
             <div className="padding mt-20">
-                <div className="w-full text-5xl flex items-center justify-between">
+                <div className="w-full text-6xl flex items-center justify-between">
                     <h2 className="uppercase">Related Work</h2>
-                    <button className="flex opacity-50 text-3xl items-center gap-1 hover:gap-3 transition-all duration-300">See All <RiArrowRightLine/></button>
+                    <Link href={"/work"}>
+                    <button className="flex opacity-50 text-2xl items-center gap-1 hover:gap-3 transition-all duration-300">See All <RiArrowRightLine size={20}/></button>
+                    </Link>
                 </div>
                 <div className="mt-14 border-t border-b pb-32 border-black/20 pt-14">
                 <div className="w-full grid grid-cols-4 gap-3">

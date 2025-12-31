@@ -6,10 +6,11 @@ gsap.registerPlugin(CustomEase)
 import React, { useEffect, useState } from 'react'
 import { Squash as Hamburger } from 'hamburger-react'
 import { Link } from 'next-view-transitions'
+import { usePathname } from 'next/navigation'
 
 const menuLinks = [
   {
-    title: "home", href: "/"
+    title: "index", href: "/"
   },
   {
     title: "work", href: "/work"
@@ -20,6 +21,8 @@ const menuLinks = [
 ]
 
 const Header = () => {
+
+  const pathname = usePathname();
 
   CustomEase.create("custom_open_menu", "0.785, 0.135, 0.15, 0.86");
 
@@ -100,16 +103,35 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-5">
           <div className="flex gap-5 uppercase text-sm font-semibold ">
-            {menuLinks.map((item, i) => (
-              <Link href={item.href} key={i} className="">
-                <p className=''>{item.title}</p>
-              </Link>
-            ))}
+            {menuLinks.map((item, i) => {
+        const isActive = pathname === item.href;
+
+        return (
+          <Link
+            key={i}
+            href={item.href}
+            scroll={false}
+            className={`relative block group ${
+              isActive ? "pointer-events-none" : ""
+            }`}
+          >
+            <h2 className="text-2xl tracking-wide font-thin">
+              {item.title}
+            </h2>
+
+            <div
+              className={`absolute bottom-1 h-[2px] rounded-full bg-black transition-all duration-300
+                ${isActive ? "w-full" : "w-0 group-hover:w-full"}
+              `}
+            />
+          </Link>
+        );
+      })}
           </div>
-          <div className="size-12 relative group overflow-hidden hover:text-white rounded-full center">
+          {/* <div className="size-12 relative group overflow-hidden hover:text-white rounded-full center">
             <div className="w-full h-full group-hover:scale-100 rounded-full z-[-1] transition-all duration-300 ease-in-out scale-0 absolute bg-black"></div>
             <Hamburger size={20} toggled={openMenu} toggle={setOpenMenu} />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

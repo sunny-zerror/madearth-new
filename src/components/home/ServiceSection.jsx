@@ -168,7 +168,9 @@ const ServiceSection = () => {
                             </div>
                             <div className="flex items-center justify-between mt-4  text-white w-full">
                                 <div className="flex items-center gap-2">
-                                    <div className="size-7  rounded-full bg-red-600"></div>
+                                    <div className="size-7 center rounded-full bg-white">
+                                        <img className='w-[70%]' src="/logo.png" alt="" />
+                                    </div>
                                     <p className='uppercase text-sm'>MadEarth</p>
                                     <p className='opacity-80'>1h</p>
                                 </div>

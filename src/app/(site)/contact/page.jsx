@@ -32,13 +32,14 @@ const ServicesPage = () => {
     <>
       <div
         className=' w-full h-[55vh] flex flex-col justify-end padding bg-[linear-gradient(to_bottom,#f1bb74_20.284%,transparent)]'>
-        <p className='text-6xl uppercase font-semibold '>Work with us</p>
-        <p className='text-4xl opacity-70'>
+        <h2 className='text-8xl uppercase '>Work with us</h2>
+        <p className='text-2xl capitalize leading-none opacity-70'>
           Let's talk about your next chapter
         </p>
       </div>
 
       <div className="padding mt-44">
+
         <div className="border-t border-black/20">
           <div className="w-full flex text-2xl">
             <div className="w-1/2 flex flex-col justify-center gap-y-14">
@@ -92,15 +93,7 @@ const ServicesPage = () => {
         </div>
       </div>
 
-      <div className="padding mt-32 ">
-        <p className='text-4xl w-[60%]'>We partner with the world’s disruptors, across emerging, growing, or never-before-heard-of industries.</p>
-        <div className="w-full grid mt-20 grid-cols-6 gap-3">
-          {[1, 2, 3, 4, 5, 6,].map((item, i) => (
-            <button className='bg-[#99a1af0f] hover:bg-[#44546b24] transition-all duration-300 w-full center h-32 rounded-xl '>
-              <p>Clients PNG</p>
-            </button>
-          ))}
-        </div>
+      <div className="padding mt-20 ">
         <div className="w-full p-10 mt-3 h-[55vh] rounded-xl flex bg-[#99a1af0f]">
           <div className="w-[60%] flex flex-col justify-between">
             <p className='text-3xl'>Everything just flowed. Their expertise, patience and attention to detail made New Genre fantastic partners and I cannot recommend them highly enough.</p>
@@ -115,10 +108,11 @@ const ServicesPage = () => {
         </div>
       </div>
 
-      <div className="padding my-32">
+      <div className="padding my-32 mb-20">
         <div className=" text-3xl">
-          <p>Have questions?</p>
-          <p className='opacity-60'>We’ve got answers.</p>
+          {/* <p>Have questions?</p> */}
+          <h2 className='uppercase text-7xl'>Have questions?</h2>
+          <p className='opacity-60 text-2xl capitalize'>We’ve got answers.</p>
         </div>
         <div className="mt-16">
           {faq.map((item, i) => {

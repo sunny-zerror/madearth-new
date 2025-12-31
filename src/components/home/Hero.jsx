@@ -30,7 +30,6 @@ const Hero = () => {
     glitchTick();
   };
 
-
   const glitchTick = () => {
     let stillGlitching = false;
 
@@ -70,13 +69,11 @@ const Hero = () => {
 
 
   useEffect(() => {
-    // ✅ ALWAYS restore text first
     charsRef.current.forEach(c => {
       c.el.textContent = c.char;
       c.isCoded = false;
     });
 
-    // then start glitch
     startInitialGlitch();
 
     const timeout = setTimeout(() => {
@@ -89,7 +86,6 @@ const Hero = () => {
     return () => {
       clearTimeout(timeout);
 
-      // ✅ CLEANUP on route change
       charsRef.current.forEach(c => {
         if (c.timeout) clearTimeout(c.timeout);
         c.el.textContent = c.char;
@@ -131,11 +127,6 @@ const Hero = () => {
       }
     })
 
-    tl.to(".hero_bg_vide", {
-      filter: "brightness(0.5)",
-      scale: 1.4,
-      ease: "linear",
-    })
     tl.to(container.current, {
       scale: 1.4,
       gap: "6rem",
@@ -148,15 +139,19 @@ const Hero = () => {
     }, "<")
 
     tl.from(".about_head", {
-      scale: .5,
+      scale: .6,
       ease: "expo.inOut",
     }, "<")
 
     tl.to(".about_head", {
-      scale: .4,
-      y: -50,
+      scale: .5,
+     top:"-15%",
       ease: "expo.inOut",
     })
+    tl.to(".show_reel_vid", {
+      borderRadius: "2rem",
+      ease: "expo.inOut",
+    },"<")
 
     tl.from(".about_para", {
       height: 0,
@@ -178,7 +173,10 @@ const Hero = () => {
       </div> */}
 
         <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
-          <p>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
+          <p className='medium'>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
+        </div>
+        <div className="absolute   leading-none  bottom-12 right-12  ">
+          <p className='medium'>Scroll ↓</p>
         </div>
 
         <div
@@ -203,7 +201,7 @@ const Hero = () => {
           </p>
         </div>
 
-        <div
+        {/* <div
           onClick={() => setExpandVideo(!expandVideo)}
           className="cursor-pointer show_reel rounded-sm overflow-hidden absolute z-[9] bottom-12 aspect-video w-[18vw] right-12"
         >
@@ -212,16 +210,19 @@ const Hero = () => {
             className='cover'
             src="/videos/show_reel.mp4"
           ></video>
-        </div>
+        </div> */}
 
-        <div className="about_paren absolute  bg-[#A8D37E] center flex-col h-0 overflow-hidden w-full z-[15] ">
-          <div className=" about_head ">
-            <h2 className='text-[35vw] leading-[26vw]'>MADEARTH</h2>
-            <p className='text-[10vw] leading-[8vw] uppercase'>Creative studios</p>
+        <div className="about_paren absolute  bg-[#6FC4D7] flex   items-end  h-0 overflow-hidden w-full z-[15] ">
+          <div className=" about_head absolute top-0 w-full h-full">
+            <video
+            loop autoPlay muted playsInline
+            className='cover show_reel_vid'
+            src="/videos/show_reel.mp4"
+          ></video>
           </div>
 
-          <div className=" translate-y-[-6vw]   about_para w-full  overflow-hidden flex justify-center">
-            <p className=' w-[45%] text-xl'>Mad Earth is a strategic design studio rooted in design thinking and storytelling. We specialize in creating cohesive brand identities and immersive visual experiences that spark connection and clarity. <br /> <br /> With a multidisciplinary approach spanning branding, editorial, and digital design, we partner with clients to shape narratives, systems, and aesthetics that are not only beautiful — but meaningful and effective.</p>
+          <div className="about_para relative z-50 w-full  mb-[5vw] overflow-hidden flex justify-center">
+            <p className=' w-[45%] text-xl medium leading-tight'>Mad Earth is a strategic design studio rooted in design thinking and storytelling. We specialize in creating cohesive brand identities and immersive visual experiences that spark connection and clarity. <br /> <br /> With a multidisciplinary approach spanning branding, editorial, and digital design, we partner with clients to shape narratives, systems, and aesthetics that are not only beautiful — but meaningful and effective.</p>
           </div>
 
         </div>
