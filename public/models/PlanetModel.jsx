@@ -75,7 +75,6 @@ export default function PlanetModel(props) {
         start: "top top",
         end: "bottom top",
         scrub: true,
-        markers: true
       }
     })
 
