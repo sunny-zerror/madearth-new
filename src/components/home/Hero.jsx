@@ -3,11 +3,12 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { isViewTransitioning } from '../utility/viewTransitionState';
+import PlanetScene from './heroSection/PlanetScene';
 
 const glyphs = ["▄", "█", "□", "▀", "►", "●", "○", "▪", "▫", "▲", "▼", "◄", "∞"];
 
 const Hero = () => {
-  const line1 = "Design  ↘ That ▫ Connects ";
+  const line1 = "MAD ▫ Earth ";
   const line2 = "Creativity ▪ That ↗ Resonates";
   const container = useRef(null);
   const charsRef = useRef([]);
@@ -172,34 +173,38 @@ const Hero = () => {
         <video loop autoPlay muted playsInline className='cover' src="/videos/hero_bg.mp4"></video>
       </div> */}
 
-        <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
+        {/* <div className="absolute w-[20%] text-left leading-none  bottom-12 left-12  ">
           <p className='medium'>We are Mad Earth — a design-led studio crafting bold identities and intelligent visual systems through the power of design thinking.</p>
         </div>
         <div className="absolute   leading-none  bottom-12 right-12  ">
           <p className='medium'>Scroll ↓</p>
-        </div>
+        </div> */}
 
         <div
           ref={container}
           onMouseEnter={startGlitch}
           className="whitespace-nowrap font-semibold flex flex-col  cursor-pointer select-none"
         >
-          <p className="capitalize text-6xl leading-none">
+          <div className="capitalize text-[15vw]  font-thin text-white leading-none">
             {line1.split("").map((c, i) => (
-              <span key={i} className="char inline-block">
+              <h2 key={i} className="char inline-block">
                 {c === " " ? "\u00A0" : c}
-              </span>
+              </h2>
             ))}
-          </p>
+          </div>
 
-          <p className="capitalize text-6xl leading-none">
+          {/* <p className="capitalize text-6xl leading-none">
             {line2.split("").map((c, i) => (
               <span key={i} className="char inline-block">
                 {c === " " ? "\u00A0" : c}
               </span>
             ))}
-          </p>
+          </p> */}
         </div>
+
+            <div className="planet_section absolute z-[-1] w-full h-full">
+              <PlanetScene />
+            </div>
 
         {/* <div
           onClick={() => setExpandVideo(!expandVideo)}
