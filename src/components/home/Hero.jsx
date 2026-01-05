@@ -14,86 +14,86 @@ const Hero = () => {
   const charsRef = useRef([]);
   const [expandVideo, setExpandVideo] = useState(false);
 
-  const startInitialGlitch = () => {
-    charsRef.current.forEach((c) => {
-      c.isCoded = true;
-    });
-    glitchTick();
-  };
+  // const startInitialGlitch = () => {
+  //   charsRef.current.forEach((c) => {
+  //     c.isCoded = true;
+  //   });
+  //   glitchTick();
+  // };
 
-  const startGlitch = () => {
-    if (isViewTransitioning) return;
+  // const startGlitch = () => {
+  //   if (isViewTransitioning) return;
 
-    charsRef.current.forEach((c) => {
-      c.isCoded = Math.random() > 0.5;
-    });
+  //   charsRef.current.forEach((c) => {
+  //     c.isCoded = Math.random() > 0.5;
+  //   });
 
-    glitchTick();
-  };
+  //   glitchTick();
+  // };
 
-  const glitchTick = () => {
-    let stillGlitching = false;
+  // const glitchTick = () => {
+  //   let stillGlitching = false;
 
-    charsRef.current.forEach((c) => {
-      if (c.isCoded) {
-        stillGlitching = true;
+  //   charsRef.current.forEach((c) => {
+  //     if (c.isCoded) {
+  //       stillGlitching = true;
 
-        c.isCoded = Math.random() > 0.25;
+  //       c.isCoded = Math.random() > 0.25;
 
-        c.el.textContent = c.isCoded
-          ? [...glyphs, c.char][
-          Math.floor(Math.random() * (glyphs.length + 1))
-          ]
-          : c.char;
-      }
-    });
+  //       c.el.textContent = c.isCoded
+  //         ? [...glyphs, c.char][
+  //         Math.floor(Math.random() * (glyphs.length + 1))
+  //         ]
+  //         : c.char;
+  //     }
+  //   });
 
-    if (stillGlitching) {
-      const t = setTimeout(glitchTick, 80);
-      charsRef.current.forEach(c => (c.timeout = t));
-    }
-  };
-
-
-  useLayoutEffect(() => {
-    const chars = gsap.utils.toArray(
-      container.current.querySelectorAll(".char")
-    );
-
-    charsRef.current = chars.map((el) => ({
-      el,
-      char: el.textContent, // ORIGINAL TEXT
-      isCoded: false,
-      timeout: null
-    }));
-  }, []);
+  //   if (stillGlitching) {
+  //     const t = setTimeout(glitchTick, 80);
+  //     charsRef.current.forEach(c => (c.timeout = t));
+  //   }
+  // };
 
 
-  useEffect(() => {
-    charsRef.current.forEach(c => {
-      c.el.textContent = c.char;
-      c.isCoded = false;
-    });
+  // useLayoutEffect(() => {
+  //   const chars = gsap.utils.toArray(
+  //     container.current.querySelectorAll(".char")
+  //   );
 
-    startInitialGlitch();
+  //   charsRef.current = chars.map((el) => ({
+  //     el,
+  //     char: el.textContent, // ORIGINAL TEXT
+  //     isCoded: false,
+  //     timeout: null
+  //   }));
+  // }, []);
 
-    const timeout = setTimeout(() => {
-      charsRef.current.forEach(c => {
-        c.el.textContent = c.char;
-        c.isCoded = false;
-      });
-    }, 3000);
 
-    return () => {
-      clearTimeout(timeout);
+  // useEffect(() => {
+  //   charsRef.current.forEach(c => {
+  //     c.el.textContent = c.char;
+  //     c.isCoded = false;
+  //   });
 
-      charsRef.current.forEach(c => {
-        if (c.timeout) clearTimeout(c.timeout);
-        c.el.textContent = c.char;
-        c.isCoded = false;
-      });
-    };
-  }, []);
+  //   startInitialGlitch();
+
+  //   const timeout = setTimeout(() => {
+  //     charsRef.current.forEach(c => {
+  //       c.el.textContent = c.char;
+  //       c.isCoded = false;
+  //     });
+  //   }, 3000);
+
+  //   return () => {
+  //     clearTimeout(timeout);
+
+  //     charsRef.current.forEach(c => {
+  //       if (c.timeout) clearTimeout(c.timeout);
+  //       c.el.textContent = c.char;
+  //       c.isCoded = false;
+  //     });
+  //   };
+  // }, []);
 
 
   useEffect(() => {
@@ -180,7 +180,7 @@ const Hero = () => {
           <p className='medium'>Scroll ↓</p>
         </div> */}
 
-        <div
+        {/* <div
           ref={container}
           onMouseEnter={startGlitch}
           className="whitespace-nowrap font-semibold flex flex-col  cursor-pointer select-none"
@@ -193,14 +193,14 @@ const Hero = () => {
             ))}
           </div>
 
-          {/* <p className="capitalize text-6xl leading-none">
+          <p className="capitalize text-6xl leading-none">
             {line2.split("").map((c, i) => (
               <span key={i} className="char inline-block">
                 {c === " " ? "\u00A0" : c}
               </span>
             ))}
-          </p> */}
-        </div>
+          </p>
+        </div> */}
 
             <div className="planet_section absolute z-[-1] w-full h-full">
               <PlanetScene />

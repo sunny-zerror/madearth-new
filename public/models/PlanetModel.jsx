@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function PlanetModel(props) {
   const group = useRef();
@@ -35,7 +36,7 @@ export default function PlanetModel(props) {
     var tl = gsap.timeline({
       delay: 0.7,
     });
-    
+
     tl.to(group.current.position, {
       y: 0,
       duration: 1.5,
@@ -47,7 +48,7 @@ export default function PlanetModel(props) {
       duration: 1.5,
       ease: "expo.out",
     }, "<");
-    
+
     tl.to(group.current.rotation, {
       y: 0,
       duration: 5,
@@ -60,9 +61,37 @@ export default function PlanetModel(props) {
       z: 1,
       duration: 2,
       ease: "expo.inOut",
-    },"<+=0.5");
+    }, "<+=0.5");
 
   }, []);
+
+  useEffect(() => {
+
+    if (!group.current) return;
+
+    const scrollTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero_paren",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        markers: true
+      }
+    })
+
+    scrollTl.to(group.current.rotation, {
+      y: Math.PI * 2 ,
+      ease: "linear",
+    });
+
+    scrollTl.to(group.current.scale, {
+      x: 5,
+      y: 5,
+      z: 5,
+      ease: "linear",
+    }, "<");
+
+  })
 
   return (
     <group ref={group} {...props} dispose={null}>
