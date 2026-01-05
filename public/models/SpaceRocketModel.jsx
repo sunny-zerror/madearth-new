@@ -31,7 +31,7 @@ export default function SpaceRocketModel(props) {
 
     gsap.to(mats, {
       opacity: 1,
-      duration: 1,
+      duration: 4,
       ease: "expo.out",
       delay:4,
     });
